@@ -138,6 +138,58 @@ categories:
     description: "Security assessments of telecom equipment, software, and third-party vendor security"
     icon: "fas fa-building"
     keywords: ["vendor security", "third-party security", "equipment security", "software security", "supply chain"]
+  - name: "Physical Security"
+    description: "Physical infrastructure protection, facility security, and environmental security measures"
+    icon: "fas fa-hard-hat"
+    keywords: ["physical security", "infrastructure protection", "facility security", "environmental security", "access control"]
+  - name: "Data Protection"
+    description: "Data privacy, encryption, data loss prevention, and regulatory compliance for telecom data"
+    icon: "fas fa-database"
+    keywords: ["data protection", "privacy", "encryption", "data loss prevention", "GDPR", "compliance"]
+  - name: "Identity & Access Management"
+    description: "User authentication, authorization, identity verification, and access control systems"
+    icon: "fas fa-user-shield"
+    keywords: ["IAM", "authentication", "authorization", "identity management", "access control", "MFA"]
+  - name: "Application Security"
+    description: "Secure software development, application testing, and vulnerability management for telecom apps"
+    icon: "fas fa-code"
+    keywords: ["application security", "secure development", "vulnerability management", "penetration testing", "code review"]
+  - name: "Wireless Security"
+    description: "WiFi security, Bluetooth security, and wireless communication protection in telecom environments"
+    icon: "fas fa-wifi"
+    keywords: ["wireless security", "WiFi security", "Bluetooth security", "radio security", "spectrum protection"]
+  - name: "Satellite Security"
+    description: "Satellite communication security, space-based infrastructure protection, and orbital security"
+    icon: "fas fa-satellite"
+    keywords: ["satellite security", "space security", "orbital security", "satellite communications", "space infrastructure"]
+  - name: "Critical Infrastructure"
+    description: "Protection of critical telecom infrastructure, national security considerations, and resilience planning"
+    icon: "fas fa-industry"
+    keywords: ["critical infrastructure", "national security", "resilience", "infrastructure protection", "emergency response"]
+  - name: "Forensics & Investigation"
+    description: "Digital forensics, incident investigation, evidence collection, and legal compliance in telecom security"
+    icon: "fas fa-search"
+    keywords: ["digital forensics", "incident investigation", "evidence collection", "legal compliance", "chain of custody"]
+  - name: "Security Operations"
+    description: "Security operations center (SOC) management, monitoring, and operational security procedures"
+    icon: "fas fa-desktop"
+    keywords: ["SOC", "security operations", "monitoring", "alert management", "security procedures"]
+  - name: "Risk Management"
+    description: "Security risk assessment, risk mitigation strategies, and enterprise risk management frameworks"
+    icon: "fas fa-chart-line"
+    keywords: ["risk management", "risk assessment", "risk mitigation", "enterprise risk", "security risk"]
+  - name: "Business Continuity"
+    description: "Disaster recovery planning, business continuity management, and resilience strategies for telecom services"
+    icon: "fas fa-sync"
+    keywords: ["business continuity", "disaster recovery", "resilience", "BCM", "DR planning"]
+  - name: "Training & Awareness"
+    description: "Security training programs, awareness campaigns, and human factor security in telecom organizations"
+    icon: "fas fa-graduation-cap"
+    keywords: ["security training", "awareness", "human factors", "security culture", "training programs"]
+  - name: "Emerging Technologies"
+    description: "Security considerations for AI, quantum computing, blockchain, and other emerging technologies in telecom"
+    icon: "fas fa-rocket"
+    keywords: ["emerging technologies", "AI security", "quantum security", "blockchain security", "future security"]
 
 # Exclude from processing
 exclude:
