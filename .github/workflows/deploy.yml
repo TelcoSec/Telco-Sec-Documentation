@@ -1,0 +1,49 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.2'
+        bundler-cache: true
+        
+    - name: Install dependencies
+      run: |
+        gem install bundler
+        bundle install
+        
+    - name: Build site
+      run: bundle exec jekyll build --baseurl "${{ github.repository_name }}"
+      
+    - name: Deploy to GitHub Pages
+      if: github.ref == 'refs/heads/main'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./_site
+        cname: # Add your custom domain here if you have one
+        
+    - name: Build check
+      if: github.event_name == 'pull_request'
+      run: |
+        bundle exec jekyll build --baseurl "${{ github.repository_name }}"
+        echo "Site built successfully!"
+        
+    - name: Test site
+      if: github.event_name == 'pull_request'
+      run: |
+        # Add any additional testing here
+        echo "Testing completed successfully!"

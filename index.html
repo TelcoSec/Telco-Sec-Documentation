@@ -1,0 +1,398 @@
+---
+layout: default
+title: "Telco Security Research Documentation"
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }}</title>
+    <meta name="description" content="Comprehensive telecom security research documents organized by category with search functionality">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{ page.title }}">
+    <meta property="og:description" content="Comprehensive telecom security research documents organized by category with search functionality">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ page.title }}">
+    <meta name="twitter:description" content="Comprehensive telecom security research documents organized by category with search functionality">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-shield-alt me-2"></i>
+                Telco Security Docs
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#categories">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#search">Search</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://github.com/yourusername/Telco-Sec-Documentation" target="_blank">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section text-white text-center py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold mb-4">
+                        <i class="fas fa-shield-alt me-3"></i>
+                        Telecom Security Research
+                    </h1>
+                    <p class="lead mb-4">
+                        Comprehensive collection of telecom security research documents, 
+                        organized by category with powerful search functionality.
+                    </p>
+                    <div class="hero-stats row text-center">
+                        <div class="col-md-3 col-6 mb-3">
+                            <div class="stat-item">
+                                <h3 class="stat-number">8</h3>
+                                <p class="stat-label">Categories</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-3">
+                            <div class="stat-item">
+                                <h3 class="stat-number">100+</h3>
+                                <p class="stat-label">Documents</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-3">
+                            <div class="stat-item">
+                                <h3 class="stat-number">24/7</h3>
+                                <p class="stat-label">Access</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-3">
+                            <div class="stat-item">
+                                <h3 class="stat-number">Global</h3>
+                                <p class="stat-label">Community</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Section -->
+    <section id="search" class="py-5 bg-light">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <h2 class="text-center mb-4">
+                        <i class="fas fa-search me-2"></i>
+                        Search Documents
+                    </h2>
+                    <div class="search-container">
+                        <div class="input-group input-group-lg">
+                            <input type="text" id="searchInput" class="form-control" placeholder="Search for telecom security documents, topics, or keywords...">
+                            <button class="btn btn-primary" type="button" id="searchBtn">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <div class="search-filters mt-3">
+                            <div class="row">
+                                <div class="col-md-4 mb-2">
+                                    <select class="form-select" id="categoryFilter">
+                                        <option value="">All Categories</option>
+                                        <option value="network-security">Network Security</option>
+                                        <option value="5g-security">5G Security</option>
+                                        <option value="iot-security">IoT Security</option>
+                                        <option value="cloud-security">Cloud Security</option>
+                                        <option value="compliance">Compliance & Standards</option>
+                                        <option value="incident-response">Incident Response</option>
+                                        <option value="threat-intelligence">Threat Intelligence</option>
+                                        <option value="vendor-security">Vendor Security</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <select class="form-select" id="dateFilter">
+                                        <option value="">All Dates</option>
+                                        <option value="2024">2024</option>
+                                        <option value="2023">2023</option>
+                                        <option value="2022">2022</option>
+                                        <option value="2021">2021</option>
+                                        <option value="2020">2020</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <select class="form-select" id="typeFilter">
+                                        <option value="">All Types</option>
+                                        <option value="whitepaper">White Paper</option>
+                                        <option value="research">Research Paper</option>
+                                        <option value="standard">Standard</option>
+                                        <option value="guideline">Guideline</option>
+                                        <option value="report">Report</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section id="categories" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">
+                <i class="fas fa-folder-tree me-2"></i>
+                Browse by Category
+            </h2>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="category-card card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="category-icon mb-3">
+                                <i class="fas fa-shield-alt fa-3x text-primary"></i>
+                            </div>
+                            <h5 class="card-title">Network Security</h5>
+                            <p class="card-text">Core network protection, firewalls, intrusion detection systems, and network monitoring solutions.</p>
+                            <div class="category-stats mb-3">
+                                <span class="badge bg-primary me-2">15 Documents</span>
+                                <span class="badge bg-secondary">Updated Weekly</span>
+                            </div>
+                            <a href="/category/network-security" class="btn btn-outline-primary">Browse Documents</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="category-card card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="category-icon mb-3">
+                                <i class="fas fa-broadcast-tower fa-3x text-primary"></i>
+                            </div>
+                            <h5 class="card-title">5G Security</h5>
+                            <p class="card-text">5G network security, vulnerabilities, mitigations, and emerging threat landscape.</p>
+                            <div class="category-stats mb-3">
+                                <span class="badge bg-primary me-2">22 Documents</span>
+                                <span class="badge bg-secondary">Hot Topic</span>
+                            </div>
+                            <a href="/category/5g-security" class="btn btn-outline-primary">Browse Documents</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="category-card card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="category-icon mb-3">
+                                <i class="fas fa-microchip fa-3x text-primary"></i>
+                            </div>
+                            <h5 class="card-title">IoT Security</h5>
+                            <p class="card-text">Internet of Things security in telecom environments, device protection, and IoT threat management.</p>
+                            <div class="category-stats mb-3">
+                                <span class="badge bg-primary me-2">18 Documents</span>
+                                <span class="badge bg-secondary">Growing</span>
+                            </div>
+                            <a href="/category/iot-security" class="btn btn-outline-primary">Browse Documents</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="category-card card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="category-icon mb-3">
+                                <i class="fas fa-cloud fa-3x text-primary"></i>
+                            </div>
+                            <h5 class="card-title">Cloud Security</h5>
+                            <p class="card-text">Cloud infrastructure security for telecom services, multi-cloud security, and cloud-native protection.</p>
+                            <div class="category-stats mb-3">
+                                <span class="badge bg-primary me-2">12 Documents</span>
+                                <span class="badge bg-secondary">Trending</span>
+                            </div>
+                            <a href="/category/cloud-security" class="btn btn-outline-primary">Browse Documents</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="category-card card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="category-icon mb-3">
+                                <i class="fas fa-clipboard-check fa-3x text-primary"></i>
+                            </div>
+                            <h5 class="card-title">Compliance & Standards</h5>
+                            <p class="card-text">Regulatory requirements, industry standards, and compliance frameworks for telecom security.</p>
+                            <div class="category-stats mb-3">
+                                <span class="badge bg-primary me-2">25 Documents</span>
+                                <span class="badge bg-secondary">Essential</span>
+                            </div>
+                            <a href="/category/compliance" class="btn btn-outline-primary">Browse Documents</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="category-card card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="category-icon mb-3">
+                                <i class="fas fa-exclamation-triangle fa-3x text-primary"></i>
+                            </div>
+                            <h5 class="card-title">Incident Response</h5>
+                            <p class="card-text">Security incident handling, recovery procedures, and post-incident analysis for telecom environments.</p>
+                            <div class="category-stats mb-3">
+                                <span class="badge bg-primary me-2">20 Documents</span>
+                                <span class="badge bg-secondary">Critical</span>
+                            </div>
+                            <a href="/category/incident-response" class="btn btn-outline-primary">Browse Documents</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="category-card card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="category-icon mb-3">
+                                <i class="fas fa-eye fa-3x text-primary"></i>
+                            </div>
+                            <h5 class="card-title">Threat Intelligence</h5>
+                            <p class="card-text">Current threats, attack vectors, threat actors, and intelligence sharing in telecom security.</p>
+                            <div class="category-stats mb-3">
+                                <span class="badge bg-primary me-2">16 Documents</span>
+                                <span class="badge bg-secondary">Real-time</span>
+                            </div>
+                            <a href="/category/threat-intelligence" class="btn btn-outline-primary">Browse Documents</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="category-card card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="category-icon mb-3">
+                                <i class="fas fa-building fa-3x text-primary"></i>
+                            </div>
+                            <h5 class="card-title">Vendor Security</h5>
+                            <p class="card-text">Security assessments of telecom equipment, software, and third-party vendor security.</p>
+                            <div class="category-stats mb-3">
+                                <span class="badge bg-primary me-2">14 Documents</span>
+                                <span class="badge bg-secondary">Vendor</span>
+                            </div>
+                            <a href="/category/vendor-security" class="btn btn-outline-primary">Browse Documents</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recent Documents Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">
+                <i class="fas fa-clock me-2"></i>
+                Recently Added Documents
+            </h2>
+            <div class="row g-4" id="recentDocuments">
+                <!-- Recent documents will be loaded here -->
+            </div>
+            <div class="text-center mt-4">
+                <a href="/documents" class="btn btn-primary btn-lg">View All Documents</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Results Section -->
+    <section id="searchResults" class="py-5" style="display: none;">
+        <div class="container">
+            <h2 class="mb-4">
+                <i class="fas fa-search me-2"></i>
+                Search Results
+            </h2>
+            <div class="row">
+                <div class="col-12">
+                    <div id="resultsContainer">
+                        <!-- Search results will be displayed here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5><i class="fas fa-shield-alt me-2"></i>Telco Security Docs</h5>
+                    <p class="text-muted">
+                        Comprehensive telecom security research documentation for professionals, researchers, and engineers.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-linkedin fa-lg"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-github fa-lg"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#categories" class="text-muted text-decoration-none">Categories</a></li>
+                        <li><a href="#search" class="text-muted text-decoration-none">Search</a></li>
+                        <li><a href="/documents" class="text-muted text-decoration-none">All Documents</a></li>
+                        <li><a href="/about" class="text-muted text-decoration-none">About</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5>Get Involved</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/contributing" class="text-muted text-decoration-none">Contribute</a></li>
+                        <li><a href="/guidelines" class="text-muted text-decoration-none">Guidelines</a></li>
+                        <li><a href="/contact" class="text-muted text-decoration-none">Contact</a></li>
+                        <li><a href="/newsletter" class="text-muted text-decoration-none">Newsletter</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0 text-muted">&copy; 2024 Telco Security Documentation. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0 text-muted">
+                        Built with <i class="fas fa-heart text-danger"></i> by the telecom security community
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ '/assets/js/search.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+# Jekyll build output
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
+# Bundle vendor directory
+vendor/
+.bundle/
+
+# Node modules (if using Node.js tools)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# nyc test coverage
+.nyc_output
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+
+# Temporary files
+*.tmp
+*.temp
+
+# Backup files
+*.bak
+*.backup
+
+# Archive files
+*.zip
+*.tar.gz
+*.rar
+
+# PDF and document files (if not tracking them)
+*.pdf
+*.doc
+*.docx
+*.xls
+*.xlsx
+
+# Large media files
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+*.webm
+
+# Audio files
+*.mp3
+*.wav
+*.flac
+*.aac
+
+# Image files (if not tracking them)
+*.psd
+*.ai
+*.eps
+*.tiff
+*.bmp
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Cache directories
+.cache/
+.temp/
+.tmp/
+
+# Build artifacts
+dist/
+build/
+out/
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Local configuration overrides
+_config.local.yml
+_config.dev.yml
+
+# Jekyll plugins (if not using them)
+_plugins/
+
+# Jekyll layouts (if not using them)
+_layouts/
+
+# Jekyll includes (if not using them)
+_includes/
+
+# Jekyll posts (if not using them)
+_posts/
+
+# Jekyll drafts (if not using them)
+_drafts/
+
+# Jekyll data (if not using them)
+_data/
+
+# Jekyll collections (if not using them)
+_collections/
+
+# Jekyll pages (if not using them)
+_pages/
+
+# Jekyll assets (if not using them)
+_assets/
+
+# Jekyll site (if not using them)
+_site/
+
+# Jekyll cache (if not using them)
+.jekyll-cache/
+
+# Jekyll metadata (if not using them)
+.jekyll-metadata
+
+# Jekyll sass cache (if not using them)
+.sass-cache/
+
+# Jekyll build output (if not using them)
+_site/
+
+# Jekyll temporary files (if not using them)
+.jekyll-feed/
+
+# Jekyll temporary files (if not using them)
+.jekyll-seo-tag/
+
+# Jekyll temporary files (if not using them)
+.jekyll-sitemap/
+
+# Jekyll temporary files (if not using them)
+.jekyll-paginate/
+
+# Jekyll temporary files (if not using them)
+.jekyll-archives/
+
+# Jekyll temporary files (if not using them)
+.jekyll-feed/
+
+# Jekyll temporary files (if not using them)
+.jekyll-seo-tag/
+
+# Jekyll temporary files (if not using them)
+.jekyll-sitemap/
+
+# Jekyll temporary files (if not using them)
+.jekyll-paginate/
+
+# Jekyll temporary files (if not using them)
+.jekyll-archives/
