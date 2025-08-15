@@ -1,0 +1,47 @@
+User-agent: *
+Allow: /
+
+# Allow crawling of all content
+Allow: /docs/
+Allow: /assets/
+Allow: /category/
+Allow: /tag/
+Allow: /search/
+
+# Disallow admin and system files
+Disallow: /_site/
+Disallow: /.git/
+Disallow: /.github/
+Disallow: /node_modules/
+Disallow: /vendor/
+Disallow: /Gemfile
+Disallow: /Gemfile.lock
+
+# Sitemap location
+Sitemap: https://telcosec.github.io/Telco-Sec-Documentation/sitemap.xml
+
+# Crawl delay (optional - be respectful to servers)
+Crawl-delay: 1
+
+# Specific rules for major search engines
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+# Block bad bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /

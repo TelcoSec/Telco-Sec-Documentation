@@ -1,0 +1,101 @@
+{
+    "name": "Telco Security Research Documentation",
+    "short_name": "Telco Security",
+    "description": "Comprehensive telecom security research documents organized by category with search functionality",
+    "start_url": "/Telco-Sec-Documentation/",
+    "display": "standalone",
+    "background_color": "#0d6efd",
+    "theme_color": "#0d6efd",
+    "orientation": "portrait-primary",
+    "scope": "/Telco-Sec-Documentation/",
+    "lang": "en",
+    "categories": ["education", "productivity", "utilities"],
+    "icons": [
+        {
+            "src": "/Telco-Sec-Documentation/assets/images/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "/Telco-Sec-Documentation/assets/images/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "/Telco-Sec-Documentation/assets/images/favicon-16x16.png",
+            "sizes": "16x16",
+            "type": "image/png"
+        },
+        {
+            "src": "/Telco-Sec-Documentation/assets/images/favicon-32x32.png",
+            "sizes": "32x32",
+            "type": "image/png"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Search Documents",
+            "short_name": "Search",
+            "description": "Search for telecom security documents",
+            "url": "/Telco-Sec-Documentation/#search",
+            "icons": [
+                {
+                    "src": "/Telco-Sec-Documentation/assets/images/search-icon.png",
+                    "sizes": "96x96"
+                }
+            ]
+        },
+        {
+            "name": "Browse Categories",
+            "short_name": "Categories",
+            "description": "Browse documents by category",
+            "url": "/Telco-Sec-Documentation/#categories",
+            "icons": [
+                {
+                    "src": "/Telco-Sec-Documentation/assets/images/categories-icon.png",
+                    "sizes": "96x96"
+                }
+            ]
+        },
+        {
+            "name": "Recent Documents",
+            "short_name": "Recent",
+            "description": "View recently added documents",
+            "url": "/Telco-Sec-Documentation/#recent",
+            "icons": [
+                {
+                    "src": "/Telco-Sec-Documentation/assets/images/recent-icon.png",
+                    "sizes": "96x96"
+                }
+            ]
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "/Telco-Sec-Documentation/assets/images/screenshot-wide.png",
+            "sizes": "1280x720",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "Homepage of Telco Security Documentation"
+        },
+        {
+            "src": "/Telco-Sec-Documentation/assets/images/screenshot-narrow.png",
+            "sizes": "750x1334",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Mobile view of Telco Security Documentation"
+        }
+    ],
+    "related_applications": [
+        {
+            "platform": "webapp",
+            "url": "https://telcosec.github.io/Telco-Sec-Documentation/"
+        }
+    ],
+    "prefer_related_applications": false,
+    "edge_side_panel": {
+        "preferred_width": 400
+    }
+}

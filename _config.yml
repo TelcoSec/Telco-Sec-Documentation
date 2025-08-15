@@ -1,22 +1,31 @@
 # Jekyll Configuration for Telco-Sec-Documentation
-# GitHub Pages site configuration
+# GitHub Pages site configuration - SEO Optimized
 
 # Site settings
 title: "Telco Security Research Documentation"
-description: "Comprehensive telecom security research documents organized by category with search functionality"
-url: "https://yourusername.github.io"
+description: "Comprehensive telecom security research documents, white papers, standards, and best practices organized by category with advanced search functionality"
+url: "https://telcosec.github.io"
 baseurl: "/Telco-Sec-Documentation"
 
 # Author information
 author:
   name: "Telco Security Community"
-  email: "contact@example.com"
-  bio: "Telecom security professionals and researchers"
+  email: "contact@telcosec.org"
+  bio: "Telecom security professionals and researchers sharing knowledge and best practices"
   location: "Global"
   links:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/yourusername"
+      url: "https://github.com/TelcoSec"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://linkedin.com/company/telcosec"
+
+# SEO and Meta settings
+lang: "en"
+locale: "en_US"
+timezone: "UTC"
+encoding: "utf-8"
 
 # Build settings
 markdown: kramdown
@@ -26,11 +35,38 @@ relative_links:
   enabled: true
   collections: true
 
+# SEO Plugin Configuration
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-paginate
+  - jekyll-archives
+
+# SEO Tag Defaults
+seo:
+  title: "Telco Security Research Documentation"
+  description: "Comprehensive telecom security research documents, white papers, standards, and best practices organized by category with advanced search functionality"
+  author: "Telco Security Community"
+  image: "/assets/images/telco-security-og.jpg"
+  image_alt: "Telco Security Research Documentation Hub"
+  twitter:
+    creator: "@telcosec"
+    site: "@telcosec"
+  facebook:
+    app_id: "123456789"
+  google_analytics: "G-XXXXXXXXXX"
+  google_verification: "your-google-verification-code"
+  bing_verification: "your-bing-verification-code"
+  yandex_verification: "your-yandex-verification-code"
+
 # Collections
 collections:
   documents:
     output: true
     permalink: /:collection/:name/
+    sort_by: date
+    reverse: true
 
 # Defaults
 defaults:
@@ -40,14 +76,9 @@ defaults:
     values:
       layout: "document"
       author: "Telco Security Community"
-
-# Plugins
-plugins:
-  - jekyll-feed
-  - jekyll-seo-tag
-  - jekyll-sitemap
-  - jekyll-paginate
-  - jekyll-archives
+      comments: true
+      share: true
+      related: true
 
 # Pagination
 paginate: 20
@@ -68,91 +99,110 @@ jekyll-archives:
 # Search
 search: true
 search_full_content: true
+search_exclude:
+  - "assets/"
+  - "_site/"
+  - "node_modules/"
 
-# Categories
+# Categories with enhanced SEO
 categories:
   - name: "Network Security"
-    description: "Core network protection, firewalls, intrusion detection"
+    description: "Core network protection, firewalls, intrusion detection systems, and network security best practices"
     icon: "fas fa-shield-alt"
+    keywords: ["network security", "firewall", "intrusion detection", "network protection", "cybersecurity"]
   - name: "5G Security"
-    description: "5G network security, vulnerabilities, and mitigations"
+    description: "5G network security, vulnerabilities, threats, and mitigation strategies for telecom operators"
     icon: "fas fa-broadcast-tower"
+    keywords: ["5G security", "5G networks", "telecom security", "network vulnerabilities", "5G threats"]
   - name: "IoT Security"
-    description: "Internet of Things security in telecom environments"
+    description: "Internet of Things security in telecom environments, device protection, and IoT threat mitigation"
     icon: "fas fa-microchip"
+    keywords: ["IoT security", "device security", "telecom IoT", "connected devices", "IoT threats"]
   - name: "Cloud Security"
-    description: "Cloud infrastructure security for telecom services"
+    description: "Cloud infrastructure security for telecom services, multi-cloud security, and cloud-native protection"
     icon: "fas fa-cloud"
+    keywords: ["cloud security", "multi-cloud", "cloud-native", "telecom cloud", "infrastructure security"]
   - name: "Compliance & Standards"
-    description: "Regulatory requirements and industry standards"
+    description: "Regulatory requirements, industry standards, and compliance frameworks for telecom security"
     icon: "fas fa-clipboard-check"
+    keywords: ["compliance", "standards", "regulations", "frameworks", "telecom compliance"]
   - name: "Incident Response"
-    description: "Security incident handling and recovery procedures"
+    description: "Security incident handling, recovery procedures, and incident management best practices"
     icon: "fas fa-exclamation-triangle"
+    keywords: ["incident response", "security incidents", "recovery", "incident management", "breach response"]
   - name: "Threat Intelligence"
-    description: "Current threats and attack vectors"
+    description: "Current threats, attack vectors, threat hunting, and intelligence sharing in telecom security"
     icon: "fas fa-eye"
+    keywords: ["threat intelligence", "threat hunting", "attack vectors", "intelligence sharing", "threat analysis"]
   - name: "Vendor Security"
-    description: "Security assessments of telecom equipment and software"
+    description: "Security assessments of telecom equipment, software, and third-party vendor security"
     icon: "fas fa-building"
+    keywords: ["vendor security", "third-party security", "equipment security", "software security", "supply chain"]
 
 # Exclude from processing
 exclude:
-  - Gemfile
-  - Gemfile.lock
-  - node_modules
-  - vendor
-  - .git
-  - .github
-  - README.md
-  - CONTRIBUTING.md
-  - LICENSE
+  - "Gemfile"
+  - "Gemfile.lock"
+  - "node_modules"
+  - "vendor"
+  - ".bundle"
+  - ".git"
+  - ".github"
+  - "README.md"
+  - "SETUP.md"
+  - "DEPLOYMENT.md"
+  - "PROJECT_SUMMARY.md"
+  - "CONTRIBUTING.md"
 
-# Include in processing
+# Include for processing
 include:
-  - _pages
-  - _posts
-  - _drafts
+  - "_pages"
+  - "assets"
+  - "docs"
 
-# Sass
-sass:
-  sass_dir: _sass
-  style: compressed
+# Feed settings
+feed:
+  path: feed.xml
+  limit: 20
 
-# Timezone
-timezone: UTC
+# Sitemap settings
+sitemap:
+  changefreq: weekly
+  priority: 0.8
+  lastmod: true
+  exclude:
+    - "/feed.xml"
+    - "/404.html"
 
-# Encoding
-encoding: utf-8
+# Social media and sharing
+social:
+  name: "Telco Security Research Documentation"
+  links:
+    - "https://github.com/TelcoSec"
+    - "https://linkedin.com/company/telcosec"
+    - "https://twitter.com/telcosec"
 
-# Future posts
-future: false
+# Analytics and tracking
+analytics:
+  google: "G-XXXXXXXXXX"
+  google_tag_manager: "GTM-XXXXXXX"
+  facebook_pixel: "123456789"
+  linkedin_insight: "123456789"
 
-# Show drafts
-show_drafts: false
+# Performance optimization
+compress_html:
+  clippings: all
+  comments: all
+  endings: all
+  profile: false
+  blanklines: false
+  ignore:
+    envs: []
 
-# Limit posts
-limit_posts: 0
-
-# Excerpt separator
-excerpt_separator: "\n\n"
-
-# Incremental build
-incremental: false
-
-# Keep files
-keep_files:
-  - .git
-  - .github
-  - assets
-  - _config.yml
-
-# Ignore files
-ignore:
-  - .git
-  - .github
-  - node_modules
-  - vendor
-  - .sass-cache
-  - .jekyll-cache
-  - .jekyll-metadata
+# Security headers
+security_headers:
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: "1; mode=block"
+  Referrer-Policy: strict-origin-when-cross-origin
+  Content-Security-Policy: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' data: https:; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; connect-src 'self' https:; frame-ancestors 'none';"
