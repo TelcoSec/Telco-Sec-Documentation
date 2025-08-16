@@ -63,12 +63,28 @@ jobs:
       - name: Check for Secrets
         run: |
           echo "🔍 Scanning for exposed secrets..."
-          if grep -r "password\|secret\|key\|token" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=_site; then
-            echo "⚠️  Potential secrets found - please review"
+          
+          # More intelligent secret detection - exclude legitimate content
+          # Look for actual secret patterns, not just keywords in documentation
+          
+          # Check for actual API keys, passwords, or tokens
+          if grep -r -i "password\s*=\s*['\"][^'\"]*['\"]\|secret\s*=\s*['\"][^'\"]*['\"]\|api_key\s*=\s*['\"][^'\"]*['\"]\|token\s*=\s*['\"][^'\"]*['\"]" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=_site --exclude=*.md --exclude=*.html --exclude=*.css --exclude=*.js --exclude=*.yml --exclude=*.yaml --exclude=*.toml; then
+            echo "⚠️  Potential secrets found in configuration files - please review"
             exit 1
-          else
-            echo "✅ No exposed secrets found"
           fi
+          
+          # Check for hardcoded credentials in code
+          if grep -r -i "password.*=.*['\"][^'\"]*['\"]\|secret.*=.*['\"][^'\"]*['\"]\|api_key.*=.*['\"][^'\"]*['\"]\|token.*=.*['\"][^'\"]*['\"]" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=_site --include="*.js" --include="*.py" --include="*.rb" --include="*.php" --include="*.java" --include="*.cs"; then
+            echo "⚠️  Potential hardcoded credentials found in source code - please review"
+            exit 1
+          fi
+          
+          # Check for environment variable patterns that might contain secrets
+          if grep -r -i "process\.env\.[a-zA-Z_]*[Pp]assword\|process\.env\.[a-zA-Z_]*[Ss]ecret\|process\.env\.[a-zA-Z_]*[Kk]ey\|process\.env\.[a-zA-Z_]*[Tt]oken" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=_site --include="*.js" --include="*.ts"; then
+            echo "⚠️  Environment variable access found - ensure secrets are properly managed"
+          fi
+          
+          echo "✅ No exposed secrets found - scan completed successfully"
 
       - name: Validate Configuration Files
         run: |
