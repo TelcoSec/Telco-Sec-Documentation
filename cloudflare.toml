@@ -1,22 +1,56 @@
 [build]
   command = "gem install bundler && bundle install && bundle exec jekyll build"
   publish = "_site"
+  watch = ["_config.yml", "docs/**/*", "assets/**/*"]
 
 [build.environment]
   JEKYLL_ENV = "production"
   BUNDLE_VERSION = "2.4.22"
   RUBY_VERSION = "3.2.2"
+  NODE_VERSION = "18"
 
-[site]
-  bucket = "_site"
+# D1 Database Configuration
+[[d1_databases]]
+  binding = "DB"
+  database_name = "telco-security-docs"
+  database_id = "your-database-id-here"
+  migrations_dir = "migrations"
 
+# KV Namespace for caching and session storage
+[[kv_namespaces]]
+  binding = "CACHE"
+  id = "your-kv-namespace-id-here"
+  preview_id = "your-preview-kv-id-here"
+
+# R2 Storage for file uploads and media
+[[r2_buckets]]
+  binding = "MEDIA"
+  bucket_name = "telco-security-media"
+  preview_bucket_name = "telco-security-media-preview"
+
+# Environment-specific configurations
 [env.production]
   name = "production"
   url = "https://documentation.telco-sec.com"
+  
+  [env.production.vars]
+    ENVIRONMENT = "production"
+    ANALYTICS_ID = "your-analytics-id"
+    CDN_URL = "https://cdn.telco-sec.com"
 
 [env.preview]
   name = "preview"
   url = "https://preview.documentation.telco-sec.com"
+  
+  [env.preview.vars]
+    ENVIRONMENT = "preview"
+    ANALYTICS_ID = "preview-analytics-id"
+
+# Site configuration
+[site]
+  bucket = "_site"
+  compatibility_date = "2024-01-15"
+  compatibility_flags = ["nodejs_compat"]
 
 # Headers for security and performance
 [[headers]]
@@ -26,51 +60,88 @@
     X-Content-Type-Options = "nosniff"
     X-XSS-Protection = "1; mode=block"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'none';"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    X-Permitted-Cross-Domain-Policies = "none"
+    X-Download-Options = "noopen"
+    X-Robots-Tag = "index, follow"
 
-# Cache static assets
+# Cache static assets with long-term caching
 [[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+    ETag = "true"
 
-# Cache images
+# Cache images with optimization
 [[headers]]
   for = "*.jpg"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+    ETag = "true"
 
 [[headers]]
   for = "*.png"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+    ETag = "true"
 
 [[headers]]
   for = "*.gif"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+    ETag = "true"
 
 [[headers]]
   for = "*.svg"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+    ETag = "true"
 
-# Cache CSS and JS
+[[headers]]
+  for = "*.webp"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    ETag = "true"
+
+# Cache CSS and JS with versioning
 [[headers]]
   for = "*.css"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+    ETag = "true"
+    Vary = "Accept-Encoding"
 
 [[headers]]
   for = "*.js"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+    ETag = "true"
+    Vary = "Accept-Encoding"
 
 # HTML files - shorter cache for content updates
 [[headers]]
   for = "*.html"
   [headers.values]
     Cache-Control = "public, max-age=3600"
+    ETag = "true"
+    Vary = "Accept-Encoding"
+
+# API endpoints - no cache for dynamic content
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Pragma = "no-cache"
+    Expires = "0"
+
+# Sitemap and feed - moderate caching
+[[headers]]
+  for = "*.xml"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+    Content-Type = "application/xml; charset=utf-8"
 
 # Redirects for old GitHub Pages URLs
 [[redirects]]
@@ -78,7 +149,13 @@
   to = "/:splat"
   status = 301
 
-# Sitemap and feed
+# API redirects for D1 database access
+[[redirects]]
+  from = "/api/db/*"
+  to = "/api/database/:splat"
+  status = 301
+
+# Sitemap and feed redirects
 [[redirects]]
   from = "/sitemap.xml"
   to = "/sitemap.xml"
@@ -88,3 +165,55 @@
   from = "/feed.xml"
   to = "/feed.xml"
   status = 200
+
+# Robots.txt and security.txt
+[[redirects]]
+  from = "/robots.txt"
+  to = "/robots.txt"
+  status = 200
+
+[[redirects]]
+  from = "/.well-known/security.txt"
+  to = "/security.txt"
+  status = 200
+
+# Error pages
+[[redirects]]
+  from = "/404"
+  to = "/404.html"
+  status = 200
+
+[[redirects]]
+  from = "/500"
+  to = "/500.html"
+  status = 200
+
+# Performance optimizations
+[env.production.optimization]
+  minify = { javascript = true, css = true, html = true }
+  bundle = true
+  tree_shaking = true
+
+# Edge functions for dynamic functionality
+[functions]
+  directory = "functions"
+  node_compat = true
+
+# Cron triggers for scheduled tasks
+[triggers]
+  crons = [
+    "0 0 * * *", # Daily at midnight
+    "0 */6 * * *" # Every 6 hours
+  ]
+
+# Analytics and monitoring
+[analytics]
+  enabled = true
+  sampling_rate = 0.1
+
+# Security settings
+[security]
+  headers = true
+  ssl = "strict"
+  hsts = true
+  min_tls_version = "1.2"
