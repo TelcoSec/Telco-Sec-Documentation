@@ -1,0 +1,6 @@
+# Redirects for old GitHub Pages URLs
+/Telco-Sec-Documentation/* /:splat 301
+
+# Sitemap and feed
+/sitemap.xml /sitemap.xml 200
+/feed.xml /feed.xml 200

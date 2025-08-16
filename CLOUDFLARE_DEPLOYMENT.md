@@ -30,6 +30,8 @@ This guide will walk you through deploying your telecom security documentation s
 ✅ **Already Completed:**
 - `_config.yml` - Updated for Cloudflare Pages
 - `cloudflare.toml` - Cloudflare Pages configuration
+- `_headers` - Cloudflare Pages headers
+- `_redirects` - Cloudflare Pages redirects
 - `Gemfile` - Cloudflare Pages compatible dependencies
 
 #### B. Commit and Push Changes
@@ -57,7 +59,7 @@ git push origin main
 Project name: telco-security-docs
 Production branch: main
 Root directory: / (leave as default)
-Build command: bundle exec jekyll build
+Build command: gem install bundler && bundle install && bundle exec jekyll build
 Build output directory: _site
 ```
 
@@ -72,7 +74,7 @@ RUBY_VERSION = 3.2.2
 
 #### B. Dependencies Installation
 ```
-Install command: bundle install
+Install command: gem install bundler && bundle install
 ```
 
 ### Step 4: Deploy and Configure
@@ -163,15 +165,20 @@ Settings:
 
 ### Common Issues and Solutions
 
-#### A. Build Failures
+#### A. Build Failures - Bundle Not Found
 ```
-Error: Jekyll build failed
-Solution: Check Ruby version compatibility
-- Ensure Ruby 3.2.2+ is available
-- Verify bundle install completes successfully
+Error: /bin/sh: 1: bundle: not found
+Solution: Use the updated build command:
+gem install bundler && bundle install && bundle exec jekyll build
 ```
 
-#### B. Plugin Compatibility
+#### B. Ruby Version Issues
+```
+Error: Ruby version mismatch
+Solution: Ensure Ruby 3.2.2+ is specified in cloudflare.toml
+```
+
+#### C. Plugin Compatibility
 ```
 Error: Plugin not found
 Solution: Verify plugin compatibility
@@ -179,7 +186,7 @@ Solution: Verify plugin compatibility
 - Check Gemfile for correct versions
 ```
 
-#### C. Domain Issues
+#### D. Domain Issues
 ```
 Error: Domain not accessible
 Solution: Check DNS configuration
@@ -299,5 +306,5 @@ Your telecom security documentation will be accessible to professionals worldwid
 ---
 
 *Last Updated: January 2024*  
-*Version: 1.0*  
-*Status: Ready for Deployment*
+*Version: 1.1*  
+*Status: Ready for Deployment - Build Issues Fixed*
