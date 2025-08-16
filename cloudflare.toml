@@ -1,13 +1,15 @@
 [build]
-  command = "gem install bundler && bundle install && bundle exec jekyll build"
+  command = "chmod +x build.sh && ./build.sh"
   publish = "_site"
-  watch = ["_config.yml", "docs/**/*", "assets/**/*"]
+  watch = ["_config.yml", "docs/**/*", "assets/**/*", "build.sh"]
 
 [build.environment]
   JEKYLL_ENV = "production"
   BUNDLE_VERSION = "2.4.22"
   RUBY_VERSION = "3.2.2"
   NODE_VERSION = "18"
+  BUNDLE_WITHOUT = "development test"
+  BUNDLE_GEMFILE = "Gemfile"
 
 # D1 Database Configuration
 [[d1_databases]]

@@ -1,0 +1,28 @@
+{
+  "name": "telco-security-docs",
+  "version": "1.0.0",
+  "description": "Telecom Security Documentation Site",
+  "main": "index.js",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "scripts": {
+    "build": "gem install bundler --version 2.4.22 && bundle install && bundle exec jekyll build",
+    "test": "bundle exec jekyll doctor",
+    "serve": "bundle exec jekyll serve"
+  },
+  "keywords": [
+    "telecom",
+    "security",
+    "documentation",
+    "jekyll",
+    "cloudflare"
+  ],
+  "author": "Telco Security Community",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TelcoSec/Telco-Sec-Documentation.git"
+  }
+}

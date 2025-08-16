@@ -1,0 +1,33 @@
+# Cloudflare Pages Build Configuration
+# This file provides additional build settings for Cloudflare Pages
+
+[build]
+  # Build command override
+  command = "chmod +x build.sh && ./build.sh"
+  
+  # Environment variables
+  [build.environment]
+    JEKYLL_ENV = "production"
+    BUNDLE_VERSION = "2.4.22"
+    RUBY_VERSION = "3.2.2"
+    NODE_VERSION = "18"
+    BUNDLE_WITHOUT = "development test"
+    BUNDLE_GEMFILE = "Gemfile"
+    
+    # Cloudflare-specific settings
+    CF_PAGES = "1"
+    CF_PAGES_BRANCH = "main"
+    CF_PAGES_COMMIT_SHA = "auto"
+    
+    # Build optimization
+    JEKYLL_ENV = "production"
+    BUNDLE_CONFIG = "--deployment"
+    BUNDLE_CLEAN = "true"
+    
+    # Ruby environment
+    RUBYOPT = "-W0"
+    BUNDLE_APP_CONFIG = ".bundle"
+    
+    # Node environment
+    NPM_CONFIG_PRODUCTION = "false"
+    NODE_ENV = "production"
