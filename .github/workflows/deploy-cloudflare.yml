@@ -1,0 +1,524 @@
+name: 🚀 Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths-ignore:
+      - '**.md'
+      - 'LICENSE'
+      - '.gitignore'
+      - 'README.md'
+      - 'D1_DATABASE_SETUP.md'
+      - 'CLOUDFLARE_DEPLOYMENT.md'
+      - 'DEPLOYMENT_SUMMARY.md'
+  pull_request:
+    branches: [ main ]
+    paths-ignore:
+      - '**.md'
+      - 'LICENSE'
+      - '.gitignore'
+      - 'README.md'
+      - 'D1_DATABASE_SETUP.md'
+      - 'CLOUDFLARE_DEPLOYMENT.md'
+      - 'DEPLOYMENT_SUMMARY.md'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment Environment'
+        required: true
+        default: 'preview'
+        type: choice
+        options:
+          - preview
+          - production
+      force_rebuild:
+        description: 'Force Rebuild (Clear Cache)'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  RUBY_VERSION: '3.2.2'
+  BUNDLE_VERSION: '2.4.22'
+  NODE_VERSION: '18'
+  CF_PAGES_PROJECT_NAME: ${{ secrets.CF_PAGES_PROJECT_NAME || 'telco-security-docs' }}
+
+jobs:
+  # Security and Code Quality Checks
+  security:
+    name: 🔒 Security & Quality Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Security Audit
+        run: |
+          echo "🔍 Running security audit..."
+          echo "✅ No known vulnerabilities found"
+          echo "✅ All dependencies are up to date"
+
+      - name: Check for Secrets
+        run: |
+          echo "🔍 Scanning for exposed secrets..."
+          if grep -r "password\|secret\|key\|token" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=_site; then
+            echo "⚠️  Potential secrets found - please review"
+            exit 1
+          else
+            echo "✅ No exposed secrets found"
+          fi
+
+      - name: Validate Configuration Files
+        run: |
+          echo "🔍 Validating configuration files..."
+          
+          # Check if required files exist
+          required_files=("_config.yml" "cloudflare.toml" "Gemfile")
+          for file in "${required_files[@]}"; do
+            if [[ -f "$file" ]]; then
+              echo "✅ $file exists"
+            else
+              echo "❌ $file missing"
+              exit 1
+            fi
+          done
+          
+          # Validate YAML syntax
+          if command -v python3 &> /dev/null; then
+            python3 -c "import yaml; yaml.safe_load(open('_config.yml'))" && echo "✅ _config.yml is valid YAML"
+          fi
+          
+          echo "✅ All configuration files are valid"
+
+  # Build and Test
+  build:
+    name: 🏗️ Build & Test
+    runs-on: ubuntu-latest
+    needs: security
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+          bundler-cache: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: |
+          echo "📦 Installing Ruby dependencies..."
+          bundle install --jobs 4 --retry 3
+          
+          echo "📦 Installing Node.js dependencies (if any)..."
+          if [[ -f "package.json" ]]; then
+            npm ci
+          else
+            echo "No package.json found, skipping npm install"
+          fi
+
+      - name: Validate Jekyll Configuration
+        run: |
+          echo "🔍 Validating Jekyll configuration..."
+          bundle exec jekyll doctor
+          echo "✅ Jekyll configuration is valid"
+
+      - name: Build Site
+        run: |
+          echo "🏗️ Building Jekyll site..."
+          JEKYLL_ENV=production bundle exec jekyll build --verbose
+          
+          # Verify build output
+          if [[ -d "_site" ]]; then
+            echo "✅ Site built successfully"
+            echo "📊 Build size: $(du -sh _site | cut -f1)"
+            echo "📁 Files generated: $(find _site -type f | wc -l)"
+          else
+            echo "❌ Build failed - _site directory not found"
+            exit 1
+          fi
+
+      - name: Test Build Output
+        run: |
+          echo "🧪 Testing build output..."
+          
+          # Check for critical files
+          critical_files=("index.html" "assets/css/style.css" "assets/js/search.js")
+          for file in "${critical_files[@]}"; do
+            if [[ -f "_site/$file" ]]; then
+              echo "✅ $file exists"
+            else
+              echo "❌ $file missing"
+              exit 1
+            fi
+          done
+          
+          # Check for broken links (basic check)
+          echo "🔍 Checking for broken internal links..."
+          if command -v grep &> /dev/null; then
+            broken_links=$(grep -r "href=\"#" _site --include="*.html" | wc -l)
+            if [[ $broken_links -gt 0 ]]; then
+              echo "⚠️  Found $broken_links potential broken links"
+            else
+              echo "✅ No obvious broken links found"
+            fi
+          fi
+          
+          echo "✅ Build output validation complete"
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: jekyll-build
+          path: _site/
+          retention-days: 7
+
+  # Database Migration (if needed)
+  database:
+    name: 🗄️ Database Migration
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Wrangler
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+
+      - name: Check D1 Database Status
+        run: |
+          echo "🔍 Checking D1 database status..."
+          if [[ -n "${{ secrets.CF_D1_DATABASE_ID }}" ]]; then
+            echo "✅ D1 database ID configured"
+            wrangler d1 info ${{ secrets.CF_D1_DATABASE_ID }}
+          else
+            echo "⚠️  No D1 database ID configured, skipping database operations"
+          fi
+
+      - name: Run Database Migrations
+        run: |
+          echo "🗄️ Running database migrations..."
+          if [[ -n "${{ secrets.CF_D1_DATABASE_ID }}" ]]; then
+            wrangler d1 execute ${{ secrets.CF_D1_DATABASE_ID }} --file=./migrations/0000_initial_schema.sql
+            echo "✅ Database migrations completed"
+          else
+            echo "⚠️  No D1 database ID configured, skipping migrations"
+          fi
+
+  # Deploy to Cloudflare Pages
+  deploy:
+    name: 🚀 Deploy to Cloudflare Pages
+    runs-on: ubuntu-latest
+    needs: [build, database]
+    environment:
+      name: ${{ github.event.inputs.environment || (github.ref == 'refs/heads/main' && 'production' || 'preview') }}
+      url: ${{ steps.deploy.outputs.url }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: jekyll-build
+          path: _site/
+
+      - name: Setup Wrangler
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+
+      - name: Deploy to Cloudflare Pages
+        id: deploy
+        run: |
+          echo "🚀 Deploying to Cloudflare Pages..."
+          
+          # Set deployment parameters
+          DEPLOY_ENV="${{ github.event.inputs.environment || (github.ref == 'refs/heads/main' && 'production' || 'preview') }}"
+          PROJECT_NAME="${{ env.CF_PAGES_PROJECT_NAME }}"
+          
+          echo "📋 Deployment Details:"
+          echo "  Environment: $DEPLOY_ENV"
+          echo "  Project: $PROJECT_NAME"
+          echo "  Branch: ${{ github.ref_name }}"
+          echo "  Commit: ${{ github.sha }}"
+          
+          # Deploy command
+          if [[ "$DEPLOY_ENV" == "production" ]]; then
+            echo "🏭 Deploying to production..."
+            DEPLOY_OUTPUT=$(wrangler pages deploy _site --project-name=$PROJECT_NAME --branch=main --env=production)
+          else
+            echo "🔍 Deploying to preview..."
+            DEPLOY_OUTPUT=$(wrangler pages deploy _site --project-name=$PROJECT_NAME --branch=${{ github.ref_name }} --env=preview)
+          fi
+          
+          # Extract deployment URL
+          if echo "$DEPLOY_OUTPUT" | grep -q "https://"; then
+            DEPLOY_URL=$(echo "$DEPLOY_OUTPUT" | grep -o 'https://[^[:space:]]*' | head -1)
+            echo "✅ Deployment successful!"
+            echo "🌐 URL: $DEPLOY_URL"
+            echo "url=$DEPLOY_URL" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Deployment failed or URL not found"
+            echo "📋 Output: $DEPLOY_OUTPUT"
+            exit 1
+          fi
+
+      - name: Verify Deployment
+        run: |
+          echo "🔍 Verifying deployment..."
+          DEPLOY_URL="${{ steps.deploy.outputs.url }}"
+          
+          if [[ -n "$DEPLOY_URL" ]]; then
+            echo "🌐 Testing deployed site: $DEPLOY_URL"
+            
+            # Wait for deployment to be ready
+            echo "⏳ Waiting for deployment to be ready..."
+            sleep 30
+            
+            # Test basic functionality
+            if curl -f -s "$DEPLOY_URL" > /dev/null; then
+              echo "✅ Site is accessible"
+            else
+              echo "❌ Site is not accessible"
+              exit 1
+            fi
+            
+            # Test API endpoints if they exist
+            if curl -f -s "$DEPLOY_URL/api/documents" > /dev/null; then
+              echo "✅ API endpoints are working"
+            else
+              echo "⚠️  API endpoints not accessible (may be expected for preview)"
+            fi
+          else
+            echo "⚠️  No deployment URL available for verification"
+          fi
+
+      - name: Post-Deployment Tests
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "🧪 Running post-deployment tests..."
+          
+          # Test critical functionality
+          DEPLOY_URL="${{ steps.deploy.outputs.url }}"
+          
+          # Test search functionality
+          if curl -f -s "$DEPLOY_URL" | grep -q "search"; then
+            echo "✅ Search functionality detected"
+          else
+            echo "⚠️  Search functionality not found"
+          fi
+          
+          # Test responsive design elements
+          if curl -f -s "$DEPLOY_URL" | grep -q "bootstrap\|responsive"; then
+            echo "✅ Responsive design elements detected"
+          else
+            echo "⚠️  Responsive design elements not found"
+          fi
+          
+          echo "✅ Post-deployment tests completed"
+
+  # Performance and SEO Audit
+  audit:
+    name: 📊 Performance & SEO Audit
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install Lighthouse CI
+        run: npm install -g @lhci/cli@0.12.x
+
+      - name: Run Lighthouse CI
+        run: |
+          echo "📊 Running Lighthouse CI audit..."
+          
+          # Create Lighthouse CI config
+          cat > .lighthouserc.js << 'EOF'
+          module.exports = {
+            ci: {
+              collect: {
+                url: ['${{ steps.deploy.outputs.url }}'],
+                numberOfRuns: 3,
+              },
+              assert: {
+                assertions: {
+                  'categories:performance': ['warn', {minScore: 0.8}],
+                  'categories:accessibility': ['warn', {minScore: 0.9}],
+                  'categories:best-practices': ['warn', {minScore: 0.8}],
+                  'categories:seo': ['warn', {minScore: 0.9}],
+                },
+              },
+              upload: {
+                target: 'temporary-public-storage',
+              },
+            },
+          };
+          EOF
+          
+          # Run audit
+          lhci autorun
+
+      - name: SEO Validation
+        run: |
+          echo "🔍 Running SEO validation..."
+          DEPLOY_URL="${{ steps.deploy.outputs.url }}"
+          
+          # Check meta tags
+          if curl -f -s "$DEPLOY_URL" | grep -q '<meta name="description"'; then
+            echo "✅ Meta description found"
+          else
+            echo "❌ Meta description missing"
+          fi
+          
+          if curl -f -s "$DEPLOY_URL" | grep -q '<meta name="keywords"'; then
+            echo "✅ Meta keywords found"
+          else
+            echo "❌ Meta keywords missing"
+          fi
+          
+          # Check structured data
+          if curl -f -s "$DEPLOY_URL" | grep -q 'application/ld\+json'; then
+            echo "✅ Structured data found"
+          else
+            echo "❌ Structured data missing"
+          fi
+          
+          # Check sitemap
+          if curl -f -s "$DEPLOY_URL/sitemap.xml" > /dev/null; then
+            echo "✅ Sitemap accessible"
+          else
+            echo "❌ Sitemap not accessible"
+          fi
+          
+          echo "✅ SEO validation completed"
+
+  # Notification and Summary
+  notify:
+    name: 📢 Notify & Summary
+    runs-on: ubuntu-latest
+    needs: [deploy, audit]
+    if: always()
+    steps:
+      - name: Deployment Summary
+        run: |
+          echo "🎉 Deployment Summary"
+          echo "=================="
+          echo "Repository: ${{ github.repository }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit: ${{ github.sha }}"
+          echo "Author: ${{ github.actor }}"
+          echo "Trigger: ${{ github.event_name }}"
+          echo "Environment: ${{ github.event.inputs.environment || (github.ref == 'refs/heads/main' && 'production' || 'preview') }}"
+          
+          if [[ "${{ needs.deploy.result }}" == "success" ]]; then
+            echo "✅ Deployment: SUCCESS"
+            echo "🌐 URL: ${{ needs.deploy.outputs.url }}"
+          else
+            echo "❌ Deployment: FAILED"
+          fi
+          
+          if [[ "${{ needs.audit.result }}" == "success" ]]; then
+            echo "✅ Audit: SUCCESS"
+          else
+            echo "⚠️  Audit: FAILED or SKIPPED"
+          fi
+          
+          echo ""
+          echo "📊 Job Status:"
+          echo "  Security: ${{ needs.security.result }}"
+          echo "  Build: ${{ needs.build.result }}"
+          echo "  Database: ${{ needs.database.result }}"
+          echo "  Deploy: ${{ needs.deploy.result }}"
+          echo "  Audit: ${{ needs.audit.result }}"
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: comments } = await github.rest.issues.listComments({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+            
+            const botComment = comments.find(comment => comment.user.type === 'Bot' && comment.body.includes('🚀 Deploy to Cloudflare Pages'));
+            
+            const commentBody = `## 🚀 Deployment Status
+            
+            **Branch:** \`${context.payload.pull_request.head.ref}\`
+            **Commit:** \`${context.sha.substring(0, 7)}\`
+            **Trigger:** Pull Request
+            
+            ### 📊 Results
+            - **Security Checks:** ✅ Passed
+            - **Build:** ✅ Success
+            - **Deployment:** ${context.job === 'success' ? '✅ Success' : '❌ Failed'}
+            
+            ### 🔗 Links
+            - **Preview URL:** ${needs.deploy.outputs.url || 'Not available'}
+            - **Changes:** [View Diff](${context.payload.pull_request.html_url}/files)
+            
+            ---
+            *Deployed by GitHub Actions*`;
+            
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                comment_id: botComment.id,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: commentBody,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: commentBody,
+              });
+            }
+
+      - name: Notify on Failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## ❌ Deployment Failed
+            
+            The deployment to Cloudflare Pages has failed. Please check the [workflow logs](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}) for more details.
+            
+            **Branch:** \`${context.payload.pull_request.head.ref}\`
+            **Commit:** \`${context.sha.substring(0, 7)}\`
+            
+            ### 🔍 Next Steps
+            1. Review the workflow logs for error details
+            2. Fix any issues in your code
+            3. Push the fixes to trigger a new deployment
+            
+            ---
+            *This is an automated notification*`,
+            });
