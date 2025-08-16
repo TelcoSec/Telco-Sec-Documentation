@@ -1,11 +1,11 @@
 # Jekyll Configuration for Telco-Sec-Documentation
-# GitHub Pages site configuration - SEO Optimized
+# Cloudflare Pages deployment configuration - SEO Optimized
 
 # Site settings
 title: "Telco Security Research Documentation"
 description: "Comprehensive telecom security research documents, white papers, standards, and best practices organized by category with advanced search functionality"
-url: "https://telcosec.github.io"
-baseurl: "/Telco-Sec-Documentation"
+url: "https://documentation.telco-sec.com"
+baseurl: ""
 
 # Author information
 author:
@@ -35,7 +35,7 @@ relative_links:
   enabled: true
   collections: true
 
-# SEO Plugin Configuration
+# Jekyll Plugins (Cloudflare Pages compatible)
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
@@ -205,6 +205,7 @@ exclude:
   - "DEPLOYMENT.md"
   - "PROJECT_SUMMARY.md"
   - "CONTRIBUTING.md"
+  - "cloudflare.toml"
 
 # Include for processing
 include:
@@ -251,7 +252,7 @@ compress_html:
   ignore:
     envs: []
 
-# Security headers
+# Security headers (Cloudflare Pages compatible)
 security_headers:
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
