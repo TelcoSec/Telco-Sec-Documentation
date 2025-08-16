@@ -104,92 +104,169 @@ search_exclude:
   - "_site/"
   - "node_modules/"
 
-# Categories with enhanced SEO
+# Telecom Security Categories - Comprehensive Industry Coverage
 categories:
-  - name: "Network Security"
-    description: "Core network protection, firewalls, intrusion detection systems, and network security best practices"
+  # Core Network Security
+  - name: "Core Network Security"
+    description: "Core network protection, firewalls, intrusion detection systems, and network security best practices for telecom infrastructure"
     icon: "fas fa-shield-alt"
-    keywords: ["network security", "firewall", "intrusion detection", "network protection", "cybersecurity"]
-  - name: "5G Security"
-    description: "5G network security, vulnerabilities, threats, and mitigation strategies for telecom operators"
+    keywords: ["core network security", "firewall", "intrusion detection", "network protection", "telecom infrastructure", "MPLS security", "routing security"]
+  
+  # 5G & Next-Gen Networks
+  - name: "5G & Next-Gen Security"
+    description: "5G network security, vulnerabilities, threats, and mitigation strategies for telecom operators and service providers"
     icon: "fas fa-broadcast-tower"
-    keywords: ["5G security", "5G networks", "telecom security", "network vulnerabilities", "5G threats"]
-  - name: "IoT Security"
-    description: "Internet of Things security in telecom environments, device protection, and IoT threat mitigation"
+    keywords: ["5G security", "5G networks", "6G security", "next-gen networks", "telecom security", "network vulnerabilities", "5G threats", "network slicing security"]
+  
+  # Mobile & Wireless Security
+  - name: "Mobile & Wireless Security"
+    description: "Mobile network security, wireless communication protection, and spectrum security in telecom environments"
+    icon: "fas fa-mobile-alt"
+    keywords: ["mobile security", "wireless security", "WiFi security", "Bluetooth security", "radio security", "spectrum protection", "cellular security", "mobile threats"]
+  
+  # IoT & Device Security
+  - name: "IoT & Device Security"
+    description: "Internet of Things security in telecom environments, device protection, and IoT threat mitigation for connected infrastructure"
     icon: "fas fa-microchip"
-    keywords: ["IoT security", "device security", "telecom IoT", "connected devices", "IoT threats"]
-  - name: "Cloud Security"
-    description: "Cloud infrastructure security for telecom services, multi-cloud security, and cloud-native protection"
+    keywords: ["IoT security", "device security", "telecom IoT", "connected devices", "IoT threats", "smart city security", "industrial IoT", "device management"]
+  
+  # Cloud & Virtualization Security
+  - name: "Cloud & Virtualization Security"
+    description: "Cloud infrastructure security for telecom services, multi-cloud security, and cloud-native protection with virtualization considerations"
     icon: "fas fa-cloud"
-    keywords: ["cloud security", "multi-cloud", "cloud-native", "telecom cloud", "infrastructure security"]
-  - name: "Compliance & Standards"
-    description: "Regulatory requirements, industry standards, and compliance frameworks for telecom security"
+    keywords: ["cloud security", "multi-cloud", "cloud-native", "telecom cloud", "infrastructure security", "virtualization security", "container security", "orchestration security"]
+  
+  # Regulatory Compliance
+  - name: "Regulatory Compliance"
+    description: "Telecom-specific regulatory requirements, industry standards, and compliance frameworks for security and privacy"
     icon: "fas fa-clipboard-check"
-    keywords: ["compliance", "standards", "regulations", "frameworks", "telecom compliance"]
-  - name: "Incident Response"
-    description: "Security incident handling, recovery procedures, and incident management best practices"
+    keywords: ["telecom compliance", "regulatory requirements", "industry standards", "frameworks", "GDPR", "CCPA", "SOX", "PCI DSS", "telecom regulations"]
+  
+  # Incident Response & Recovery
+  - name: "Incident Response & Recovery"
+    description: "Security incident handling, recovery procedures, and incident management best practices for telecom operations"
     icon: "fas fa-exclamation-triangle"
-    keywords: ["incident response", "security incidents", "recovery", "incident management", "breach response"]
-  - name: "Threat Intelligence"
-    description: "Current threats, attack vectors, threat hunting, and intelligence sharing in telecom security"
+    keywords: ["incident response", "security incidents", "recovery", "incident management", "breach response", "telecom incidents", "service restoration", "crisis management"]
+  
+  # Threat Intelligence & Hunting
+  - name: "Threat Intelligence & Hunting"
+    description: "Current threats, attack vectors, threat hunting, and intelligence sharing specific to telecom security landscape"
     icon: "fas fa-eye"
-    keywords: ["threat intelligence", "threat hunting", "attack vectors", "intelligence sharing", "threat analysis"]
-  - name: "Vendor Security"
-    description: "Security assessments of telecom equipment, software, and third-party vendor security"
+    keywords: ["threat intelligence", "threat hunting", "attack vectors", "intelligence sharing", "threat analysis", "telecom threats", "APT groups", "nation-state attacks"]
+  
+  # Supply Chain & Vendor Security
+  - name: "Supply Chain & Vendor Security"
+    description: "Security assessments of telecom equipment, software, third-party vendor security, and supply chain risk management"
     icon: "fas fa-building"
-    keywords: ["vendor security", "third-party security", "equipment security", "software security", "supply chain"]
-  - name: "Physical Security"
-    description: "Physical infrastructure protection, facility security, and environmental security measures"
+    keywords: ["vendor security", "third-party security", "equipment security", "software security", "supply chain", "vendor risk", "equipment validation", "software assurance"]
+  
+  # Physical & Infrastructure Security
+  - name: "Physical & Infrastructure Security"
+    description: "Physical infrastructure protection, facility security, and environmental security measures for telecom sites"
     icon: "fas fa-hard-hat"
-    keywords: ["physical security", "infrastructure protection", "facility security", "environmental security", "access control"]
-  - name: "Data Protection"
-    description: "Data privacy, encryption, data loss prevention, and regulatory compliance for telecom data"
+    keywords: ["physical security", "infrastructure protection", "facility security", "environmental security", "access control", "site security", "tower security", "data center security"]
+  
+  # Data Protection & Privacy
+  - name: "Data Protection & Privacy"
+    description: "Data privacy, encryption, data loss prevention, and regulatory compliance for telecom data and customer information"
     icon: "fas fa-database"
-    keywords: ["data protection", "privacy", "encryption", "data loss prevention", "GDPR", "compliance"]
+    keywords: ["data protection", "privacy", "encryption", "data loss prevention", "GDPR", "compliance", "customer data", "PII protection", "data governance"]
+  
+  # Identity & Access Management
   - name: "Identity & Access Management"
-    description: "User authentication, authorization, identity verification, and access control systems"
+    description: "User authentication, authorization, identity verification, and access control systems for telecom operations"
     icon: "fas fa-user-shield"
-    keywords: ["IAM", "authentication", "authorization", "identity management", "access control", "MFA"]
-  - name: "Application Security"
-    description: "Secure software development, application testing, and vulnerability management for telecom apps"
+    keywords: ["IAM", "authentication", "authorization", "identity management", "access control", "MFA", "SSO", "privileged access", "role-based access"]
+  
+  # Application & Software Security
+  - name: "Application & Software Security"
+    description: "Secure software development, application testing, and vulnerability management for telecom applications and services"
     icon: "fas fa-code"
-    keywords: ["application security", "secure development", "vulnerability management", "penetration testing", "code review"]
-  - name: "Wireless Security"
-    description: "WiFi security, Bluetooth security, and wireless communication protection in telecom environments"
-    icon: "fas fa-wifi"
-    keywords: ["wireless security", "WiFi security", "Bluetooth security", "radio security", "spectrum protection"]
-  - name: "Satellite Security"
-    description: "Satellite communication security, space-based infrastructure protection, and orbital security"
+    keywords: ["application security", "secure development", "vulnerability management", "penetration testing", "code review", "SDLC security", "API security", "web application security"]
+  
+  # Satellite & Space Security
+  - name: "Satellite & Space Security"
+    description: "Satellite communication security, space-based infrastructure protection, and orbital security for telecom services"
     icon: "fas fa-satellite"
-    keywords: ["satellite security", "space security", "orbital security", "satellite communications", "space infrastructure"]
-  - name: "Critical Infrastructure"
-    description: "Protection of critical telecom infrastructure, national security considerations, and resilience planning"
+    keywords: ["satellite security", "space security", "orbital security", "satellite communications", "space infrastructure", "satellite threats", "space debris", "satellite hacking"]
+  
+  # Critical Infrastructure Protection
+  - name: "Critical Infrastructure Protection"
+    description: "Protection of critical telecom infrastructure, national security considerations, and resilience planning for essential services"
     icon: "fas fa-industry"
-    keywords: ["critical infrastructure", "national security", "resilience", "infrastructure protection", "emergency response"]
-  - name: "Forensics & Investigation"
-    description: "Digital forensics, incident investigation, evidence collection, and legal compliance in telecom security"
+    keywords: ["critical infrastructure", "national security", "resilience", "infrastructure protection", "emergency response", "telecom resilience", "national communications", "emergency communications"]
+  
+  # Digital Forensics & Investigation
+  - name: "Digital Forensics & Investigation"
+    description: "Digital forensics, incident investigation, evidence collection, and legal compliance in telecom security incidents"
     icon: "fas fa-search"
-    keywords: ["digital forensics", "incident investigation", "evidence collection", "legal compliance", "chain of custody"]
-  - name: "Security Operations"
-    description: "Security operations center (SOC) management, monitoring, and operational security procedures"
+    keywords: ["digital forensics", "incident investigation", "evidence collection", "legal compliance", "chain of custody", "telecom forensics", "network forensics", "mobile forensics"]
+  
+  # Security Operations Center
+  - name: "Security Operations Center"
+    description: "Security operations center (SOC) management, monitoring, and operational security procedures for telecom networks"
     icon: "fas fa-desktop"
-    keywords: ["SOC", "security operations", "monitoring", "alert management", "security procedures"]
-  - name: "Risk Management"
-    description: "Security risk assessment, risk mitigation strategies, and enterprise risk management frameworks"
+    keywords: ["SOC", "security operations", "monitoring", "alert management", "security procedures", "telecom SOC", "network monitoring", "security analytics", "SIEM"]
+  
+  # Risk Management & Governance
+  - name: "Risk Management & Governance"
+    description: "Security risk assessment, risk mitigation strategies, and enterprise risk management frameworks for telecom organizations"
     icon: "fas fa-chart-line"
-    keywords: ["risk management", "risk assessment", "risk mitigation", "enterprise risk", "security risk"]
-  - name: "Business Continuity"
-    description: "Disaster recovery planning, business continuity management, and resilience strategies for telecom services"
+    keywords: ["risk management", "risk assessment", "risk mitigation", "enterprise risk", "security risk", "governance", "risk frameworks", "telecom risk", "operational risk"]
+  
+  # Business Continuity & Disaster Recovery
+  - name: "Business Continuity & Disaster Recovery"
+    description: "Disaster recovery planning, business continuity management, and resilience strategies for telecom services and operations"
     icon: "fas fa-sync"
-    keywords: ["business continuity", "disaster recovery", "resilience", "BCM", "DR planning"]
-  - name: "Training & Awareness"
-    description: "Security training programs, awareness campaigns, and human factor security in telecom organizations"
+    keywords: ["business continuity", "disaster recovery", "resilience", "BCM", "DR planning", "telecom resilience", "service continuity", "network recovery", "emergency planning"]
+  
+  # Security Training & Awareness
+  - name: "Security Training & Awareness"
+    description: "Security training programs, awareness campaigns, and human factor security in telecom organizations and operations"
     icon: "fas fa-graduation-cap"
-    keywords: ["security training", "awareness", "human factors", "security culture", "training programs"]
-  - name: "Emerging Technologies"
-    description: "Security considerations for AI, quantum computing, blockchain, and other emerging technologies in telecom"
+    keywords: ["security training", "awareness", "human factors", "security culture", "training programs", "telecom training", "security awareness", "human error", "security education"]
+  
+  # Emerging Technologies Security
+  - name: "Emerging Technologies Security"
+    description: "Security considerations for AI, quantum computing, blockchain, and other emerging technologies in telecom infrastructure"
     icon: "fas fa-rocket"
-    keywords: ["emerging technologies", "AI security", "quantum security", "blockchain security", "future security"]
+    keywords: ["emerging technologies", "AI security", "quantum security", "blockchain security", "future security", "quantum cryptography", "AI threats", "quantum-resistant algorithms"]
+  
+  # Network Function Virtualization Security
+  - name: "NFV & SDN Security"
+    description: "Network Function Virtualization and Software-Defined Networking security for modern telecom infrastructure"
+    icon: "fas fa-network-wired"
+    keywords: ["NFV security", "SDN security", "network virtualization", "software-defined networking", "virtual network functions", "network orchestration", "virtualization security"]
+  
+  # Signaling & Protocol Security
+  - name: "Signaling & Protocol Security"
+    description: "Telecom signaling security, protocol vulnerabilities, and protection against signaling attacks in communication networks"
+    icon: "fas fa-exchange-alt"
+    keywords: ["signaling security", "protocol security", "SS7 security", "Diameter security", "SIGTRAN security", "signaling attacks", "protocol vulnerabilities", "telecom protocols"]
+  
+  # Subscriber & Customer Security
+  - name: "Subscriber & Customer Security"
+    description: "Customer data protection, subscriber privacy, and security measures for telecom service users and accounts"
+    icon: "fas fa-users"
+    keywords: ["subscriber security", "customer security", "account protection", "SIM security", "mobile number portability", "customer privacy", "account takeover", "fraud prevention"]
+  
+  # Interconnection Security
+  - name: "Interconnection Security"
+    description: "Security for telecom network interconnections, peering relationships, and cross-carrier communication security"
+    icon: "fas fa-project-diagram"
+    keywords: ["interconnection security", "peering security", "cross-carrier security", "network interconnection", "carrier security", "interconnection threats", "peering vulnerabilities"]
+  
+  # Spectrum & Radio Security
+  - name: "Spectrum & Radio Security"
+    description: "Radio frequency security, spectrum protection, and wireless communication security in telecom networks"
+    icon: "fas fa-broadcast-tower"
+    keywords: ["spectrum security", "radio security", "RF security", "wireless security", "spectrum protection", "radio jamming", "spectrum monitoring", "frequency security"]
+  
+  # Edge Computing Security
+  - name: "Edge Computing Security"
+    description: "Security considerations for edge computing, distributed networks, and edge node protection in telecom infrastructure"
+    icon: "fas fa-server"
+    keywords: ["edge computing security", "edge security", "distributed security", "edge nodes", "edge network security", "edge threats", "distributed networks", "edge protection"]
 
 # Exclude from processing
 exclude:
